@@ -1,0 +1,126 @@
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: "#/components/schemas/ValidationError"
+          title: Detail
+          type: array
+      title: HTTPValidationError
+      type: object
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          title: Location
+          type: array
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+      type: object
+  securitySchemes:
+    APIKeyHeader:
+      in: header
+      name: X-API-KEY
+      type: apiKey
+info:
+  description: Services that receives RDF graphs and parses them to JSON.
+  title: fdk-atlas-dcat-service
+  version: 0.1.0
+openapi: 3.1.0
+paths:
+  /ping:
+    get:
+      description: Ping route function.
+      operationId: get_ping_ping_get
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                title: Response Get Ping Ping Get
+                type: string
+          description: Successful Response
+      summary: Get Ping
+  /ready:
+    get:
+      description: Ready route function.
+      operationId: get_ready_ready_get
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                title: Response Get Ready Ready Get
+                type: string
+          description: Successful Response
+      summary: Get Ready
+  /{resource_type}:
+    post:
+      description:
+        Parses RDF data according to the given resource type and returns
+        it as a JSON string
+      operationId: handle_request__resource_type__post
+      parameters:
+        - in: path
+          name: resource_type
+          required: true
+          schema:
+            title: Resource Type
+            type: string
+      requestBody:
+        content:
+          text/turtle:
+            schema:
+              title: Body
+              type: string
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+        "400":
+          description: Bad request, bad input data.
+          response_class:
+            __doc__:
+              "\n    An HTTP exception you can raise in your own code to show\
+              \ errors to the client.\n\n    This is for client errors, invalid authentication,\
+              \ invalid data, etc. Not for server\n    errors in your code.\n\n  \
+              \  Read more about it in the\n    [FastAPI docs for Handling Errors](https://fastapi.tiangolo.com/tutorial/handling-errors/).\n\
+              \n    ## Example\n\n    ```python\n    from fastapi import FastAPI,\
+              \ HTTPException\n\n    app = FastAPI()\n\n    items = {\"foo\": \"The\
+              \ Foo Wrestlers\"}\n\n\n    @app.get(\"/items/{item_id}\")\n    async\
+              \ def read_item(item_id: str):\n        if item_id not in items:\n \
+              \           raise HTTPException(status_code=404, detail=\"Item not found\"\
+              )\n        return {\"item\": items[item_id]}\n    ```\n    "
+            __init__: {}
+            __module__: fastapi.exceptions
+        "401":
+          description: Unauthorized, missing or invalid API key.
+        "404":
+          description: Wrong resource type specified in the URL.
+        "422":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPValidationError"
+          description: Validation Error
+        "500":
+          description: Internal server error.
+      security:
+        - APIKeyHeader: []
+      summary: Handle Request

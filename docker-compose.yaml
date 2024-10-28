@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  fdk-atlas-dcat-service:
+    image: eu.gcr.io/digdir-fdk-infra/fdk-atlas-dcat-service:test
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      - LOG_LEVEL=DEBUG
+      - API_KEY=test-key

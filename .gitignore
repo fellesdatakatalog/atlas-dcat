@@ -1,2 +1,14 @@
 .idea
 *.env
+__pycache__/
+.cache/
+.mypy_cache/
+dist/
+.python-version
+.coverage*
+.idea
+./tmp
+.vscode
+requirements.txt
+.venv
+.env

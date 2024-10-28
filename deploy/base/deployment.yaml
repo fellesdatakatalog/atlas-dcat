@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: example-app #TODO: Change to your app name
+  name:  atlas-dcat-service
   labels:
-    app: example-app #TODO: Change to your app name
+    app: atlas-dcat-service 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: example-app #TODO: Change to your app name
+      app: atlas-dcat-service 
   strategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: example-app #TODO: Change to your app name
+        app: atlas-dcat-service 
     spec:
       containers:
-        - name: example-app #TODO: Change to your app name
-          image: example-app #TODO: Change to your app name
+        - name: atlas-dcat-service 
+          image: atlas-dcat-service 
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

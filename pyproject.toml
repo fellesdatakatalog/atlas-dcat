@@ -15,6 +15,7 @@ python-json-logger = "^2.0.7"
 uvicorn = "~0.30.6"
 pyyaml = "^6.0.2"
 pyapacheatlas = "^0.16.0"
+datacatalogtordf = "^3.0.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = {extras = ["toml"], version = "^7.6.1"}
@@ -33,7 +34,6 @@ ruff = "^0.6.3"
 [[tool.mypy.overrides]]
 ignore_missing_imports = true
 module = [
-  "fdk_rdf_parser.*",
   "pythonjsonlogger.*",
   "nox",
   "nox_poetry.*",

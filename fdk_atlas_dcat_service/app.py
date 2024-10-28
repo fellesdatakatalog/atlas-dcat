@@ -82,8 +82,7 @@ def get_catalog() -> str:
     datacatalog_name = 'livdevpurview'
     endpoint= "https://livdevpurview.purview.azure.com"
     token = azuread_auth(tenantID, clientID, clientSecret, resource_url)
-
-    endpoint = ""
+    
     atlas_endpoint_typedefs = endpoint + "/catalog/api/atlas/v2/types/typedefs"
     atlas_endpoint_query = endpoint + "/datamap/api/search/query?api-version=2023-09-01"
     atlas_endpoint_entity = endpoint + "/datamap/api/atlas/v2/entity/guid/" + "9169359d-41d8-4854-ae1b-64ec05278266"

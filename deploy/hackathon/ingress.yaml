@@ -5,7 +5,7 @@ metadata:
   name: atlas-dcat-service
 spec:
   rules:
-    - host: "atlasdcat.staging.fellesdatakatalog.digdir.no"
+    - host: ""
       http:
         paths:
           - path: /

@@ -2,16 +2,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: example-app #TODO: Change to your app name
+  name: atlas-dcat-service
 spec:
   rules:
-    - host: ""
+    - host: "atlasdcat.staging.fellesdatakatalog.digdir.no"
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: example-app #TODO: Change to your app name
+                name: atlas-dcat-service
                 port:
                   number: 8080

@@ -1,0 +1,51 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-app #TODO: Change to your app name
+  labels:
+    app: example-app #TODO: Change to your app name
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example-app #TODO: Change to your app name
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: example-app #TODO: Change to your app name
+    spec:
+      containers:
+        - name: example-app #TODO: Change to your app name
+          image: example-app #TODO: Change to your app name
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+            initialDelaySeconds: 20
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ready
+              port: 8080
+              scheme: HTTP
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+            initialDelaySeconds: 20
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 100Mi

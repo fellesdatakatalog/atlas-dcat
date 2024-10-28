@@ -1,0 +1,39 @@
+name: Build & deploy
+
+on:
+  push:
+    branches:
+      - my-branch #TODO: Change to your branch name
+
+jobs:
+  build:
+    name: Build
+    strategy:
+      matrix:
+        app_name: [ example-app ] #TODO: Change to your app name(s)
+    uses: fellesdatakatalog/workflows/.github/workflows/build-push.yaml@main
+    with:
+      app_name: ${{ matrix.app_name }}
+      environment: hackathon
+      cache_path: ./dist
+      cache_key: cache-dist-${{ github.sha }}
+      # dockerfile: ${{ matrix.app_name }}/Dockerfile  <--- Uncomment if you have multiple apps
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Deploy
+    needs: build
+    strategy:
+      matrix:
+        app_name: [ example-app ] #TODO: Change to your app name(s)
+      fail-fast: false
+    uses: fellesdatakatalog/workflows/.github/workflows/kustomize-deploy.yaml@main
+    with:
+      app_name: ${{ matrix.app_name }}
+      environment: hackathon
+      cluster: digdir-fdk-hackathon
+      monorepo_app: false # Set to true if you have multiple apps
+    secrets:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      HACKATHON_DEPLOY_SA: ${{ secrets.HACKATHON_DEPLOY_SA }}

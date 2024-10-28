@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-app #TODO: Change to your app name
+  annotations:
+    cloud.google.com/backend-config: '{"default": "backendconfig"}'
+spec:
+  selector:
+    app: example-app #TODO: Change to your app name
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort
